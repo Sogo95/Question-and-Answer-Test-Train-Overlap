@@ -1,0 +1,17 @@
+Devoir de Réseaux de Neurones
+Article : Question and Answer Test-Train Overlap in Open-domain Question Answering Datasets
+Link: https://paperswithcode.com/paper/question-and-answer-test-train-overlap-in 
+
+Dans la catégorie séquence to séquence, nous avons choisi la méthode BART parce qu’elle comporte le plus d’article de la catégorie. Parmi les articles de cette méthode, notre choix s’est porté sur : Question and Answer Test-Train Overlap in Open-Domain Question Answering Datasets car : 
+•	Les modèles de question-réponse modernes (comme BERT, T5, et GPT) sont généralement évalués sur des jeux de données de test. Cependant, si ces ensembles de test partagent un chevauchement substantiel avec les ensembles d'entraînement (test-train overlap), cela peut fausser les résultats de l'évaluation. En d'autres termes, le modèle pourrait donner de bons résultats, non pas parce qu'il généralise bien, mais parce qu'il "voit" les mêmes données qu'il a vues pendant l'entraînement
+•	Étudier le chevauchement entre les ensembles de test et d'entraînement dans les jeux de données de question-réponse (Q&A) est crucial pour évaluer la généralisabilité des modèles. 
+•	Un overlap élevé peut fausser les résultats d'évaluation, car un modèle pourrait simplement se "rappeler" des réponses vues pendant l'entraînement. Cela peut créer des biais et ne pas refléter les performances réelles du modèle sur des données non vues. 
+•	En identifiant et en réduisant cet overlap, on améliore la rigueur des évaluations et on développe des modèles plus robustes, capables de généraliser
+•	Nous avons trouvé également que le code était assez compréhensible à reproduire
+
+Nous avons débogué le code et avons y ajouté de petites modifications. Nous avons utilisé google colab pour exécuter le code. 
+Dans la partie téléchargement de données, nous avons modifié le chemin du dossier des données pour l’adapter au notre. 
+Dans l’évaluation de nos datasets on obtenait un Exact Match=0. Nous avons donc utilisé la fonction literal_eval dans la partie de lecture du fichier question-réponse et de nettoyage te conversion c’est-à-dire la fonction read_references en lieu et place de eval. 
+L’exécution de notre code affichait des erreurs dans la prédiction. Nous avons donc créé une fonction que nous avons nommé safe_parse_prediction qui tentera de convertir les chaînes de caractères en un objet Python à l’aide de ast.literal_eval. En cas d’échec (si la chaîne n'est pas valide), elle affiche un message d'erreur et renvoie la chaîne d'origine brute. Elle garantit ainsi la robustesse du code lors de la conversion des chaînes en objets Python.
+Nous avons modifié la dernière partie du code car Colab permet d'exécuter des scripts Python avec des arguments de ligne de commande.
+En résumé, nos résultats sont différents de ceux trouvés dans l’article. De plus nous avons noté quelques lignes d’erreur dans l’évaluation du dateset triviaqa. Nous pensons que le problème est dans le prétraitement des données ou le formatage du dataset. 
